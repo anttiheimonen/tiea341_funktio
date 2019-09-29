@@ -1,0 +1,7 @@
+*.cabal
+LICENSE
+*.yaml
+*.yaml.lock
+.stack-work/
+Setup.hs
+README.md
