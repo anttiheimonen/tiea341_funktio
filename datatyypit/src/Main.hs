@@ -12,15 +12,19 @@ f1 (numero,kirjain,totuus) = kirjain
 
 f2 :: (a,b,c) -> Maybe b
 f2 (a,b,c) = case (a,b,c) of
-                (_,v,_) -> Just v
+                 (_,v,_) -> Just v
 
--- (a,(b,c,d),e) -> ? c
--- f3 = (a, (b, c, d), e) = c
+-- Version 2 without maybe:
+-- f2 :: (a,b,c) -> b
+-- f2 (a,b,c) = b
+
+f3 :: (a,(b,c,d),e) -> c
+f3 (a, (b, c, d), e) = c
 
 f4 :: [a] -> Maybe a
 f4 x = case x of
               [] -> Nothing
-              x:_ -> Just x
+              y:_ -> Just y
                 
 f5 :: Either Int String -> String
 f5  x = case x of 
@@ -40,6 +44,12 @@ g1 x y = case x of
 g2 :: a -> b -> (a,b)
 g2 x y = (x,y)
 
--- g3 :: a -> b -> (Either a b)
-g3  x y = case x of
-              5 -> Right x
+-- g3 :: a -> b -> Maybe (Either a b)
+-- g3  x y = case x of
+--               _ -> Just (Left y)
+--               _ -> Nothing
+
+g3 :: a -> b -> Either a b
+g3 x y = case x of
+                v:_ -> Just (Left v)
+                _ -> Nothing
