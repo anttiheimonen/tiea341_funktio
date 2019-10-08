@@ -44,12 +44,8 @@ g1 x y = case x of
 g2 :: a -> b -> (a,b)
 g2 x y = (x,y)
 
--- g3 :: a -> b -> Maybe (Either a b)
--- g3  x y = case x of
---               _ -> Just (Left y)
---               _ -> Nothing
-
 g3 :: a -> b -> Either a b
-g3 x y = case x of
-                v:_ -> Just (Left v)
-                _ -> Nothing
+g3 x y = let 
+          xx = Left x
+          yy = Right y
+         in xx
