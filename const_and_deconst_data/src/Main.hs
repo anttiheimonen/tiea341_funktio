@@ -4,6 +4,9 @@ main :: IO ()
 main = do
   putStrLn "hello world"
 
+-- Status: Valmis
+-- https://functional-programming.it.jyu.fi/master/pages/CustomData.md#ExBuildingData
+
 
 newtype Meter = M Double 
   deriving (Eq,Ord,Show)
@@ -19,8 +22,6 @@ data OneOrTwo a b = This a | That b | These a b
 data Submission 
   = S {student :: String, content :: String, date :: (Int,Int,Int)}
   deriving (Eq,Show)
-
--- metri = M 20
 
 asMeters :: Double -> Meter
 asMeters x = M x
@@ -40,8 +41,16 @@ combine (V2 x1 y1) z = case z of
                   Nothing -> These (x1+y1) False
                   Just (V2 x2 y2) -> These (x1+y1+x2+y2) True
 
--- combine3 :: Vector2 Int -> Maybe Bool -> Maybe String 
---              -> OneOrTwo Int (OneOrTwo Bool String)
+combine3 :: Vector2 Int -> Maybe Bool -> Maybe String 
+              -> OneOrTwo Int (OneOrTwo Bool String)
+combine3 (V2 x1 x2) y z = 
+  case y of
+    Just yy -> case z of
+      Just zz -> These (x1+x2) (These yy zz)
+      Nothing -> These (x1+x2) (This yy) 
+    Nothing -> case z of
+      Just zz -> These (x1+x2) (That zz)
+      Nothing -> This (x1+x2)
 
 submitDay :: Submission -> Int
 submitDay (S _ _ (day,_,_)) = day
@@ -49,5 +58,5 @@ submitDay (S _ _ (day,_,_)) = day
 getOther :: OneOrTwo a b -> Maybe b 
 getOther x = case x of 
             This _ -> Nothing
-            That _ -> Nothing
+            That y -> Just y
             These _ y -> Just y
