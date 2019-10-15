@@ -1,0 +1,72 @@
+Question L1_Q1_2018_2
+
+Product [1,2,3] will calculate 1 * 2 * 3 * 0, which is 0. 
+
+The number 0 - True
+
+The number 1 - False
+
+The number 3 - False
+
+The number 6 - False
+
+-------------------
+
+Question L1_Q3_2018_2
+
+if x then "Good" else "Bad"           -- True
+
+if x else "Bad"                       -- False
+
+if x then "Good"                      -- False
+
+if x == True then "Good" else "Bad"   -- True
+
+-------------------
+
+Question L1_Q4_2018_2
+
+x refers always to x₂ on line 'greeting x₂ = "Hello, " ++ x'.
+x₁ and x₃ could be renamed to something else and it would not 
+change the way program works.
+
+x₁ -- False
+
+x₂ -- True
+
+x₃ -- False
+
+-------------------
+
+Question L1_Q5_2018_2
+
+Right -- False
+
+Left  -- True
+
+-------------------
+
+Question L1_Q6_2018_2
+
+((map f) x):xs  -- False
+
+(map f) x:xs    -- Fals
+
+map f (x:xs)    -- True
+
+map f x:xs      -- False
+
+-------------------
+
+Question L1_Q7_2018_2
+
+Function application (f x)  -- False
+
+Division (E₁ / E₂)          -- False
+
+Multiplication (E₁ * E₂)    -- False
+
+Syntax error                -- True
+
+atan2 takes two RealFloat variables. This function call could be
+modified into working form with brackets: atan2 (pi/12) (pi*2.1)
