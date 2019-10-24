@@ -2,7 +2,8 @@ module Lib where
 
   koko = 8
 
-  -- Tämä toimii. Vain filetteri puuttuu
+  -- Tämä toimii. Vain väärät ratkaisut poistava 
+  -- filetteri puuttuu
   ratkaisut :: Double -> [[Int]]
   ratkaisut koko
     | koko <= 1 = solution
@@ -11,7 +12,10 @@ module Lib where
         r1 = ratkaisut (koko / 2)
         r2 = ratkaisut (koko / 2)
         combined = yhdista r1 r2
-    
+
+  -- Tähän tarkastusta
+  onkoTuplaa :: Int -> [Int] -> Bool
+  onkoTuplaa etsittava lista = True
 
   type Queen = (Int,Int)
   type Setup = [Queen]
