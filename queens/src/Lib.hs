@@ -2,6 +2,17 @@ module Lib where
 
   koko = 8
 
+  -- Tämä toimii. Vain filetteri puuttuu
+  ratkaisut :: Double -> [[Int]]
+  ratkaisut koko
+    | koko <= 1 = solution
+    | otherwise = combined
+      where 
+        r1 = ratkaisut (koko / 2)
+        r2 = ratkaisut (koko / 2)
+        combined = yhdista r1 r2
+    
+
   type Queen = (Int,Int)
   type Setup = [Queen]
 
@@ -17,7 +28,7 @@ module Lib where
   -- yhdista xs ys = map (\x -> (map (\y -> x++y) ys ) ) xs
 
   puhdista :: [[Int]] -> [[Int]]
-  puhdista x = 
+  puhdista x = x
 
   yhdista :: [[Int]] -> [[Int]] -> [[Int]]
   yhdista x y = case x of
