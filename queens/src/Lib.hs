@@ -1,50 +1,45 @@
 module Lib where
 
-  koko = 8
+  -- Run the test
+  testRun :: [[Int]]
+  testRun = solve 8
 
-  -- Tämä toimii. Vain väärät ratkaisut poistava 
-  -- filetteri puuttuu
-  ratkaisut :: Double -> [[Int]]
-  ratkaisut koko
-    | koko <= 1 = solution
+  -- Solves the problem. Works only for 8 x 8 boards 
+  -- right now. Prints out all possible solutions.
+  solve :: Double -> [[Int]]
+  solve koko
+    | koko <= 1 = [[1],[2],[3],[4],[5],[6],[7],[8]]
     | otherwise = combined
       where 
-        r1 = ratkaisut (koko / 2)
-        r2 = ratkaisut (koko / 2)
-        combined = yhdista r1 r2
+        r1 = solve (koko / 2)
+        r2 = solve (koko / 2)
+        combined = combineSolutions r1 r2
 
-  -- Tähän tarkastusta
-  onkoTuplaa :: Int -> [Int] -> Bool
-  onkoTuplaa etsittava lista = True
+  -- Check that given number is not on given list
+  numberIsNotOnList :: Int -> [Int] -> Bool
+  numberIsNotOnList _ [] = True
+  numberIsNotOnList number (x:xs)
+    | number == x = False 
+    | otherwise = numberIsNotOnList number xs
 
-  type Queen = (Int,Int)
-  type Setup = [Queen]
+  -- Check that list contains only unique numbers
+  onlyUniques :: [Int] -> Bool
+  onlyUniques [] = True
+  onlyUniques (_:[]) = True
+  onlyUniques (x:xs) 
+    | (numberIsNotOnList x xs) == True = onlyUniques xs
+    | otherwise = False
 
-  solution :: [[Int]]
-  solution = [[1],[2],[3],[4]]
-
-  combine :: [[Int]] -> [[Int]] -> [[Int]]
-  combine x y = case x of
-                  [xx] -> case y of
-                      [yy] -> [xx, yy]
-
-  -- Hyvä !!! Ei olekaan
-  -- yhdista xs ys = map (\x -> (map (\y -> x++y) ys ) ) xs
-
-  puhdista :: [[Int]] -> [[Int]]
-  puhdista x = x
-
-  yhdista :: [[Int]] -> [[Int]] -> [[Int]]
-  yhdista x y = case x of
-                      [] -> []
-                      xx:xxs -> (yhdista2 xx y)++(yhdista xxs y)
+  -- Combine lists of solutions
+  combineSolutions :: [[Int]] -> [[Int]] -> [[Int]]
+  combineSolutions x y = case x of
+    [] -> []
+    xx:xxs -> (combineQueens xx y)++(combineSolutions xxs y)
   
-  yhdista2 :: [Int] -> [[Int]] -> [[Int]]
-  yhdista2 x [] = [] 
-  yhdista2 x ys = case ys of
-                      [] -> []
-                      y:ys -> (x++y):yhdista2 x ys
-
-  testimap2 = map (\x -> x + 5) [1,2,3]
-
-  testi1 = yhdista [[1],[2],[3],[4]] [[1],[2],[3],[4]]
+  -- Combine two parts of chest board into one. Leaves out
+  -- solutions where some queen threatens other queen. 
+  combineQueens :: [Int] -> [[Int]] -> [[Int]]
+  combineQueens x [] = [] 
+  combineQueens x (y:ys) 
+    | (onlyUniques(x++y)) = (x++y):combineQueens x ys
+    | otherwise = combineQueens x ys
