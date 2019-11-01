@@ -1,0 +1,52 @@
+a. Show that 
+    concat (map f x:map (map f) xs) == map f x ++ concat (map (map f) xs)
+
+
+concat []     = []             -- Concat.1 
+concat (x:xs) = x ++ concat xs -- Concat.2
+map f []     = []              -- Map.1
+map f (x:xs) = f x : map f xs  -- Map.2
+
+concat (map f x:map (map f) xs)
+== {- By Concat.2 concat (x:xs) = x ++ concat xs -}
+map f x ++ concat (map (map f) xs)
+
+-------------
+
+b. Show that 
+
+    map f x ++ map f y == map f (x++y) 
+
+    for all lists x, y and arbitrary and a well behaving function f.
+
+map f []     = []               -- Map.1
+map f (x:xs) = f x : map f xs   -- Map.2
+[]     ++ ys = ys               -- (++).1
+(x:xs) ++ ys = x:(xs++ys)       -- (++).2
+
+case of empty lists:
+
+map f [] ++ map f []
+== {- By Map.1 map f [] = [] -}
+[] ++ []
+== {- By (++).1 [] ++ ys = ys -}
+[]
+== {- By Map.1 map f [] = [], in reverse -}
+map f []
+== {- By (++).1 [] ++ ys = ys, in reverse}
+map f ([]++[])
+
+case of lists with length N:
+
+map f (x:xs) ++ map f y
+== {- By Map.2 map f (x:xs) = f x : map f xs ] -}
+(f x : map f x) ++ (map f y)
+== {- By (++).2 (x:xs) ++ ys = x:(xs++ys) -}
+f x : (map f xs ++ map f y)
+== {- Regrouping -}
+f x : map f (xs ++ y)
+== {- By Map.2 map f (x:xs) = f x : map f xs ], in reverse -}
+map f (x:(xs ++ y))  
+== {- By (++).2 (x:xs) ++ ys = x:(xs++ys), in reverse -}
+map f ((x:xs) ++ y)
+
